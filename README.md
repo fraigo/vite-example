@@ -27,7 +27,43 @@
   * Go to `http://localhost:5173/` to see your web app
   * Try changing something in `src/components/Home` to test HMR (Hot Module Reload). Any changes will be automatically applied to the web version. (Eg: change `<code>components/HelloWorld.vue</code>` to `<code>components/Home.vue</code>`)
 
+### Adding Vue Router
 
+Organize router views in a special folder `src/views`
+
+* Create `src/views/Home.vue`
+```html
+<template>
+<h1>Home</h1>
+</template>
+```  
+* Or move `src/components/Home.vue` to `src/views`
+
+Setup Vue-router
+
+* Run `npm install vue-router`
+* Create `src/router/index.js`
+```javascript
+import { createRouter, createWebHistory } from 'vue-router'
+import Home from '../views/Home.vue'
+
+const routes = [{ path: '/', component: Home }]
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+})
+export default router
+```
+  * Import router in `src/main.js`
+```javascript
+import router from './router'
+```
+  * Add `use(router`)` to the Vue app in `src/main.js`
+```javascript
+createApp(App)
+  .use(router)
+  .mount('#app')
+```
 
 
 
