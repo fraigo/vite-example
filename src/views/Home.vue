@@ -1,5 +1,6 @@
 <script setup>
 import { useCounterStore } from '../stores/counter'
+import vueLogo from '../assets/vue.svg'
 const counterStore = useCounterStore()
 
 defineProps({
@@ -10,6 +11,10 @@ defineProps({
 
 <template>
   <h1>{{ msg }}</h1>
+
+    <p>
+      <img :src="vueLogo" class="vueLogo" alt="Vue logo" />
+    </p>
 
   <div class="card">
     <button type="button" @click="counterStore.increment()">count is {{ counterStore.count }}</button>
@@ -36,8 +41,17 @@ defineProps({
   <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .read-the-docs {
   color: #888;
+}
+.vueLogo {
+  height: 4em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+  &:hover {
+    filter: drop-shadow(0 0 1em #42b883aa);
+  }
 }
 </style>

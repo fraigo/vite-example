@@ -121,6 +121,52 @@ Replace button @click action (`count++`) and current count display (`{ count }`)
 
 You can also define custom `getters` in the store, to return specific information from the current `state`.
 
+## Adding supoort for `scss`
+
+* Import sass as a dev dependency: `npm add -D sass`
+* Now you can import `.scss` files
+```javascript
+import './styles.scss'
+```
+* Or you can declare `type="sass"` in style sections of components to use scss syntax:
+```html
+<style lang="scss">
+    div {
+      color: blue;
+      &:hover {
+        filter: drop-shadow(0 0 2em #42b883aa);
+      }
+    }
+</style>
+```
+
+### Example: Add vue Logo, class and apply hover state:
+
+Import the svg logo in the `<script>` section
+```javascript
+import vueLogo from '../assets/vue.svg'
+```
+Include the logo in the html template
+```html
+  <p>
+    <img :src="vueLogo" class="vueLogo" alt="Vue logo" />
+  </p>
+```
+Declare `.vueLogo` class and `:hover` state in the `<style>` section, using `type="sass"`
+```html
+<style scoped lang="scss">
+.vueLogo {
+  height: 4em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+  &:hover {
+    filter: drop-shadow(0 0 1em #42b883aa);
+  }
+}
+</style>
+```
+
 
 # Official References
 
