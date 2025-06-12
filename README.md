@@ -213,8 +213,29 @@ Modify `src/views/Home.vue` to use Tailwind CSS classes in elements. For example
 * `text-gray-900 dark:text-gray-400` for light and dark mode text color
 * `hover:underline text-blue-800` for links
 
+## Setup automatic Dark mode
 
+Allow the user or default browser setting to activate dark mode.
 
+* Install plugin `npm install vue-plugin-darkmode`
+* Import and use the plugin in `src/main.js`
+```javascript
+import darkMode from 'vue-plugin-darkmode'
+
+createApp(App)
+  .use(darkMode)
+  .mount('#app');
+```
+* Add to your view a button to call `$setDarkMode(boolean)` to enable/disable dark mode:
+```html
+      <button
+        type="button"
+        @click="$setDarkMode(!$isDarkMode())"
+        class="mb-2 rounded-full bg-gray-400 px-6 py-2 text-black transition-shadow hover:shadow-lg"
+      >
+        Toggle Dark Mode
+      </button>
+```
 
 # Official References
 

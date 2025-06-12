@@ -10,7 +10,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="dark flex flex-col items-center justify-center min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-400">
+  <div class="flex flex-col items-center justify-center min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-400">
     <h1 class="text-center">{{ msg }}</h1>
 
     <p>
@@ -27,7 +27,7 @@ defineProps({
       </button>
       <p>
         Edit
-        <code class="bg-gray-300 dark:bg-gray-700 p-1 rounded-md">components/Home.vue</code> to test HMR
+        <code class="bg-gray-300 dark:bg-gray-700 p-1 rounded-md">views/Home.vue</code> to test HMR
       </p>
     </div>
 
@@ -47,6 +47,19 @@ defineProps({
         >Vue Docs Scaling up Guide</a
       >.
     </p>
+
+      <button
+        type="button"
+        @click="$setDarkMode(!$isDarkMode())"
+        class="mb-2 rounded-full bg-gray-400 px-6 py-2 text-black transition-shadow hover:shadow-lg"
+      >
+        Toggle Dark Mode
+      </button>
+      <p>
+        Dark Mode is
+        <span>{{ $darkMode.value ? 'ON' : 'OFF' }}</span>
+      </p>
+
   </div>
 </template>
 
