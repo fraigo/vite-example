@@ -167,6 +167,54 @@ Declare `.vueLogo` class and `:hover` state in the `<style>` section, using `typ
 </style>
 ```
 
+## Add Tailwind CSS support
+
+See https://tailwindcss.com/docs/installation/using-postcss 
+
+Install the dev dependencies
+```bash
+npm install -D tailwindcss@latest postcss@latest autoprefixer@latest @tailwindcss/postcss
+```
+
+Create a basic `/tailwind.config.js` file for yourself:
+```javascript
+export default {
+  purge: [],
+  darkMode: 'media', // or 'false' or 'class'
+  theme: {
+    extend: {},
+  },
+  variants: {
+    extend: {},
+  },
+  plugins: [],
+}
+```
+
+Create a basic `/postcss.config.js` file:
+```javascript
+export default {
+  plugins: {
+    '@tailwindcss/postcss': {},
+  },
+}
+```
+
+Modify `src/style.css` to import tailwindcss styles. Add this line to the start and remove any unused styles. The second line is to force dark mode when the `dark` class is present.
+```css
+@import 'tailwindcss';
+@custom-variant dark (&:where(.dark, .dark *));
+```
+
+Modify `src/views/Home.vue` to use Tailwind CSS classes in elements. For example
+* `text-center` for centered text
+* `flex flex-col items-center justify-center` to center elements horizontally and vertically
+* `bg-white dark:bg-gray-900` for light and dark mode background
+* `text-gray-900 dark:text-gray-400` for light and dark mode text color
+* `hover:underline text-blue-800` for links
+
+
+
 
 # Official References
 

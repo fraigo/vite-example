@@ -10,35 +10,44 @@ defineProps({
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
+  <div class="dark flex flex-col items-center justify-center min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-400">
+    <h1 class="text-center">{{ msg }}</h1>
 
     <p>
       <img :src="vueLogo" class="vueLogo" alt="Vue logo" />
     </p>
 
-  <div class="card">
-    <button type="button" @click="counterStore.increment()">count is {{ counterStore.count }}</button>
-    <p>
-      Edit
-      <code>components/Home.vue</code> to test HMR
+    <div class="flex flex-col items-center">
+      <button
+        type="button"
+        @click="counterStore.increment()"
+        class="mb-2 rounded-full bg-gray-400 px-6 py-2 text-black transition-shadow hover:shadow-lg"
+      >
+        Count is {{ counterStore.count }}
+      </button>
+      <p>
+        Edit
+        <code class="bg-gray-300 dark:bg-gray-700 p-1 rounded-md">components/Home.vue</code> to test HMR
+      </p>
+    </div>
+
+    <p class="text-center">
+      Check out
+      <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
+        class="hover:underline text-blue-800"
+        >create-vue</a
+      >, the official Vue + Vite starter
+    </p>
+    <p class="text-center">
+      Learn more about IDE Support for Vue in the
+      <a
+        href="https://vuejs.org/guide/scaling-up/tooling.html#ide-support"
+        target="_blank"
+        class="hover:underline text-blue-800"
+        >Vue Docs Scaling up Guide</a
+      >.
     </p>
   </div>
-
-  <p>
-    Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
-      >create-vue</a
-    >, the official Vue + Vite starter
-  </p>
-  <p>
-    Learn more about IDE Support for Vue in the
-    <a
-      href="https://vuejs.org/guide/scaling-up/tooling.html#ide-support"
-      target="_blank"
-      >Vue Docs Scaling up Guide</a
-    >.
-  </p>
-  <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
 </template>
 
 <style scoped lang="scss">
@@ -47,7 +56,7 @@ defineProps({
 }
 .vueLogo {
   height: 4em;
-  padding: 1.5em;
+  padding: 1em;
   will-change: filter;
   transition: filter 300ms;
   &:hover {
