@@ -407,6 +407,39 @@ const v$ = useVuelidate(rules, formData)
 </div>
 ```
 
+`@unhead/vue` 
+
+Manage `<head>` content like title, meta and SEO tags.
+
+* Install using `npm install @unhead/vue`
+* Import and use in app `src/main.js`:
+```javascript
+import { createHead } from '@unhead/vue/client'
+
+createApp(App)
+    .use(createHead())
+    .mount('#app')
+```
+* Call to useHead() and/or useSeoMeta() on your vue App (eg: `src/App.vue`)
+```javascript
+import { useHead, useSeoMeta } from '@unhead/vue'
+
+useHead({
+  title: 'Vue 3 + Vite + Libraries Starter',
+  meta: [
+    { name: 'description', content: 'A starter template for Vue 3 with Vite and commonly used libraries.' },
+  ],
+})
+
+useSeoMeta({
+  title: 'Vue 3 + Vite + Libraries Starter',
+  description: 'A starter template for Vue 3 with Vite and commonly used libraries.',
+  ogDescription: 'A starter template for Vue 3 with Vite and commonly used libraries.',
+  ogTitle: 'Vue 3 + Vite + Libraries Starter',
+  ogImage: 'https://example.com/image.png',
+})
+```
+* More info in https://unhead.unjs.io/docs/vue/head/guides/get-started/installation#next-steps
 
 
 # Official References
