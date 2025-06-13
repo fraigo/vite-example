@@ -5,6 +5,16 @@ const counterStore = useCounterStore()
 import { temperatureQuery, queryRequest } from '../api/openMeteo';
 const currentTemp = temperatureQuery(queryRequest)
 
+import useVuelidate from '@vuelidate/core'
+import { required, minLength } from '@vuelidate/validators'
+import { reactive } from 'vue'
+import { helpers } from '@vuelidate/validators'
+const requiredName = helpers.withMessage('Name cannot be empty', required)
+const minLengthName = helpers.withMessage('Name must be at least 2 characters long', minLength(2))
+const formData = reactive({ name: '' })
+const rules = { name: { requiredName, minLengthName } }
+const v$ = useVuelidate(rules, formData)
+
 defineProps({
   msg: String,
 })
@@ -71,6 +81,16 @@ defineProps({
         Current Temperature in Vancouver:
         {{ currentTemp }}
       </p>
+
+      <div class="flex flex-col items-center" >
+        <input v-model="formData.name" type="text" placeholder="Enter your name" />
+        <p class="text-red-500" v-if="v$.name.$invalid">
+          {{ v$.name.$silentErrors ? v$.name.$silentErrors[0].$message : 'Invalid' }}
+        </p>
+        <p v-else class="text-green-700">
+          Name is Valid
+        </p>
+      </div>
 
 
   </div>

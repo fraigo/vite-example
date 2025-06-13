@@ -365,7 +365,7 @@ const itemQuery = useQuery({
 
 Lottie animation support for Vue 3 [https://app.lottiefiles.com/]
 
-* `npm install vue-lottie`
+* Install calling `npm install vue-lottie`
 * Create and download a Lottie json animation
 * Import library and .json object: 
 ```javascript
@@ -377,6 +377,35 @@ import myAnimation from '../lotties/animation1.json'
 <Vue3Lottie :width="200" :height="200" :animationData="myAnimation" />
 ```
 
+`vuelidate`
+
+Model-based validation library for Vue 3
+
+* Install calling `npm install @vuelidate/core @vuelidate/validators`
+* Use Vuelidate, create rules, personalize messages, and validate against rules
+```javascript
+import useVuelidate from '@vuelidate/core'
+import { required, minLength } from '@vuelidate/validators'
+import { reactive } from 'vue'
+import { helpers } from '@vuelidate/validators'
+const requiredName = helpers.withMessage('Name cannot be empty', required)
+const minLengthName = helpers.withMessage('Name must be at least 2 characters long', minLength(2))
+const formData = reactive({ name: '' })
+const rules = { name: { requiredName, minLengthName } }
+const v$ = useVuelidate(rules, formData)
+```
+* Validate dynamically while data changes
+```html
+<div class="flex flex-col items-center" >
+  <input v-model="formData.name" type="text" placeholder="Enter your name" />
+  <p class="text-red-500" v-if="v$.name.$invalid">
+    {{ v$.name.$silentErrors ? v$.name.$silentErrors[0].$message : 'Invalid' }}
+  </p>
+  <p v-else class="text-green-700">
+    Name is Valid
+  </p>
+</div>
+```
 
 
 
