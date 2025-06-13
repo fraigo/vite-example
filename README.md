@@ -320,7 +320,44 @@ export default {
   <p>Current temperature is {{ weatherData }}</p>
 ```
 
-More information about Axios in the official page: https://axios-http.com/docs/intro.
+More information about Axios in the official page: https://axios-http.com/docs/intro
+
+## Fetching, caching, and syncing server state
+
+Use Vue-Query along with Axios library to automate reactive fetch operations with cache and auto-refresh.
+
+* Install: `npm install vue-query`
+* Import and use in Vue App (`src/main.js`)
+```javascript
+import { VueQueryPlugin, QueryClient } from '@tanstack/vue-query'
+const queryClient = new QueryClient()
+
+createApp(App)
+    .use(VueQueryPlugin, { queryClient })
+    .mount('#app')
+```
+* Import and call `useQuery()` to create a managed query, and populate a local object.
+```javascript
+import { useQuery } from '@tanstack/vue-query'
+import { ref } from 'vue'
+const currentItem = ref(null)
+const itemId = ref(null)
+const itemQuery = useQuery({
+    queryKey: ['item', itemId.value],
+    queryFn: (context) => axios.get('https//myitems/item/'+itemId.value).then(res => res.data),
+    select: (data) => {
+        console.log('Result data:', data)
+        currentItem.value = data
+        return data
+    },
+})
+```
+* Now you can:
+  * Change `itemId` value to request a different result. Results are hashed by `queryKey`
+  * Call to `itemQuery.refetch()` to reresh the result
+  * See https://tanstack.com/query/v4/docs/framework/vue/reference/useQuery for more useQuery parameters
+
+
 
 ## Other Useful Libraries
 
