@@ -1,6 +1,7 @@
 <script setup>
 import { useCounterStore } from '../stores/counter'
 import vueLogo from '../assets/vue.svg'
+import axios from 'axios'
 const counterStore = useCounterStore()
 
 defineProps({
@@ -65,8 +66,36 @@ defineProps({
         <button class="m-1 rounded-full bg-gray-400 px-4 py-1 text-black" @click="$i18n.locale = 'en'" >English Version</button>
       </p>
 
+      <p class="my-2">
+        Current Temperature in Vancouver:
+        <span v-if="weatherData">{{ weatherData }}</span>
+        <span v-else>Loading...</span>
+      </p>
+
+
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      weatherData: null,
+    }
+  },
+  mounted() {
+    console.log('Home.vue mounted')
+    axios.get('https://api.open-meteo.com/v1/forecast?latitude=49.2497&longitude=-123.1193&current=temperature_2m&timezone=America%2FLos_Angeles&forecast_days=1')
+      .then(response => {
+        console.log('Weather data:', response.data);
+        this.weatherData = response.data.current.temperature_2m + ' ' + response.data.current_units.temperature_2m;
+      })
+      .catch(error => {
+        console.error('Error fetching weather data:', error);
+      });
+  }
+}
+</script>
 
 <style scoped lang="scss">
 .read-the-docs {

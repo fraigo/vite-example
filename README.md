@@ -278,8 +278,49 @@ $i18n.locale = 'es'`
 * For number formatting: https://vue-i18n.intlify.dev/guide/essentials/number.html
 
 
+## Supoort for HTTP(S) requests
 
+* Install Axios library: `npm install axios`
+* Import axios in your code and retrieve content:
+```javascript
+import axios from 'axios'
 
+axios.get('/api/data').then(response => {
+  console.log(response.data)
+})
+```
+
+Request and response example: getting current weather temperature.
+
+* Add this `<script>` section to `src/views/Home.vue`
+```html
+<script>
+export default {
+  data() {
+    return {
+      weatherData: null,
+    }
+  },
+  mounted() {
+    console.log('Home.vue mounted')
+    axios.get('https://api.open-meteo.com/v1/forecast?latitude=49.2497&longitude=-123.1193&current=temperature_2m&timezone=America%2FLos_Angeles&forecast_days=1')
+      .then(response => {
+        console.log('Weather data:', response.data);
+        this.weatherData = response.data.current.temperature_2m + ' ' + response.data.current_units.temperature_2m;
+      })
+      .catch(error => {
+        console.error('Error fetching weather data:', error);
+      });
+  }
+}
+</script>
+```
+* Then use `{{ weatherData }}` in your content.
+```html
+  <p>Current temperature is {{ weatherData }}</p>
+```
+
+More information about Axios in the official page: https://axios-http.com/docs/intro.
 
 
 
