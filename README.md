@@ -322,6 +322,25 @@ export default {
 
 More information about Axios in the official page: https://axios-http.com/docs/intro.
 
+## Other Useful Libraries
+
+`vue3-lottie`
+
+Lottie animation support for Vue 3 [https://app.lottiefiles.com/]
+
+* `npm install vue-lottie`
+* Create and download a Lottie json animation
+* Import library and .json object: 
+```javascript
+import { Vue3Lottie } from 'vue3-lottie'
+import myAnimation from '../lotties/animation1.json'
+```
+* Include the element in your component
+```html
+<Vue3Lottie :width="200" :height="200" :animationData="myAnimation" />
+```
+
+
 
 
 # Official References
