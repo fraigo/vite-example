@@ -237,6 +237,52 @@ createApp(App)
       </button>
 ```
 
+## Setup multi-language support (Internationalization)
+
+* Install vue-i18n `npm install vue-i18n`
+* Create a language file `src/lang/index.js`
+```javascript
+import { createI18n } from 'vue-i18n'
+const messages = {
+  en: { 
+    Hello: 'Hello' 
+  },
+  es: { 
+    Hello: 'Hola' 
+  },
+}
+const i18n = createI18n({ 
+    locale: 'en', 
+    fallbackLocale: 'en',
+    messages })
+export default i18n
+```
+* Import and use the plugin in `src/main.js`
+```javascript
+import i18n from './lang'
+
+createApp(App)
+  .use(i18n)
+  .mount('#app');
+```
+* Add entries in the component that will be automatically translated to the current locale using the `$t(key)` method.
+```html
+<h1>{{ $t('Hello')}}</h1>
+```
+* You can set the current language using the exposed `$i18n` object: 
+```javascript
+$i18n.locale = 'es'`
+```
+* For pluralization see: https://vue-i18n.intlify.dev/guide/essentials/pluralization.html
+* For date/time formatting see: https://vue-i18n.intlify.dev/guide/essentials/datetime.html
+* For number formatting: https://vue-i18n.intlify.dev/guide/essentials/number.html
+
+
+
+
+
+
+
 # Official References
 
 This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.

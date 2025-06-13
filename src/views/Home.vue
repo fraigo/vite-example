@@ -11,7 +11,7 @@ defineProps({
 
 <template>
   <div class="flex flex-col items-center justify-center min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-400">
-    <h1 class="text-center">{{ msg }}</h1>
+    <h1 class="text-center">{{ $t('Hello') }} {{ msg }}</h1>
 
     <p>
       <img :src="vueLogo" class="vueLogo" alt="Vue logo" />
@@ -58,6 +58,11 @@ defineProps({
       <p>
         Dark Mode is
         <span>{{ $darkMode.value ? 'ON' : 'OFF' }}</span>
+      </p>
+
+      <p>
+        <button class="m-1 rounded-full bg-gray-400 px-4 py-1 text-black" @click="$i18n.locale = 'es'" >Spanish Version</button>
+        <button class="m-1 rounded-full bg-gray-400 px-4 py-1 text-black" @click="$i18n.locale = 'en'" >English Version</button>
       </p>
 
   </div>
