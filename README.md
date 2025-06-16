@@ -357,6 +357,68 @@ const itemQuery = useQuery({
   * Call to `itemQuery.refetch()` to reresh the result
   * See https://tanstack.com/query/v4/docs/framework/vue/reference/useQuery for more useQuery parameters
 
+## Add VueUse Composition Utilities
+
+VueUse is a pack of useful utilities to load into your Vue project. It includes: State, Elements, Browser, Sensors, Network, Animation, Component, Watch, Reactivity, Array, Time, Utilities. Also useful add-ons like: Electron, Firebase, Head, Integrations, Math, Motion, Router, RxJS, SchemaOrg, Sound.
+
+### Sensors - useInfiniteScroll
+
+Reference: https://vueuse.org/core/useInfiniteScroll/
+
+Example:
+* Define the load logic for `data` array and limits
+```javascript
+import { useInfiniteScroll } from '@vueuse/core'
+import { ref, useTemplateRef } from 'vue'
+const data = ref([])
+useInfiniteScroll(
+  useTemplateRef('scrollContainer'),
+  () => {
+    data.value.push(...[1,2,3,4,5,6,7,8,9,10].map(i => i + data.value.length))
+  },
+  {
+    distance: 100, // distance in pixels from the bottom of the scroll container to trigger loading more data
+    canLoadMore: () => {
+      return data.value.length < 5000
+    },
+  }
+)
+```
+* Create the scroll container embedding the `data` in a loop
+```html
+<h3>Infinite Scroll Example</h3>
+<div ref="scrollContainer" class="w-32 max-h-32 overflow-y-auto border rounded-lg bg-gray-100 p-2 ">
+  <div v-for="item in data">
+    {{ item }}
+  </div>
+</div>
+```
+
+
+### Sensors: useMagicKeys
+
+Reference: https://vueuse.org/core/useMagicKeys/
+
+Example:
+
+* Define keys or combinations to watch
+```javascript
+import { useMagicKeys } from '@vueuse/core'
+const keys = useMagicKeys({ reactive: false })
+const shiftCtrlA = keys['Shift+Ctrl+A']
+// non reactive, use watches
+watch(shiftCtrlA, (v) => {
+  if (v)
+    console.log('Shift + Ctrl + A have been pressed')
+})
+```
+* Use `{ reactive: true }` to use it directly in your components:
+```html
+<h3>Magic Keys Example</h3>
+<div v-if="keys.down">Down is pressed</div>
+<div v-if="keys.up">Up is pressed</div>
+```
+
 
 
 ## Other Useful Libraries

@@ -7,13 +7,39 @@ const currentTemp = temperatureQuery(queryRequest)
 
 import useVuelidate from '@vuelidate/core'
 import { required, minLength } from '@vuelidate/validators'
-import { reactive } from 'vue'
+import { reactive, watch } from 'vue'
 import { helpers } from '@vuelidate/validators'
 const requiredName = helpers.withMessage('Name cannot be empty', required)
 const minLengthName = helpers.withMessage('Name must be at least 2 characters long', minLength(2))
 const formData = reactive({ name: '' })
 const rules = { name: { requiredName, minLengthName } }
 const v$ = useVuelidate(rules, formData)
+
+import { useInfiniteScroll } from '@vueuse/core'
+import { ref, useTemplateRef } from 'vue'
+const data = ref([])
+useInfiniteScroll(
+  useTemplateRef('scrollContainer'),
+  () => {
+    data.value.push(...[1,2,3,4,5,6,7,8,9,10].map(i => i + data.value.length))
+  },
+  {
+    distance: 100, // distance in pixels from the bottom of the scroll container to trigger loading more data
+    canLoadMore: () => {
+      return data.value.length < 5000
+    },
+  }
+)
+
+import { useMagicKeys } from '@vueuse/core'
+const keys = useMagicKeys({ reactive: true })
+const shiftCtrlV = keys['Shift+Ctrl+V']
+// only when is not reactive
+watch(shiftCtrlV, (v) => {
+  if (v)
+    console.log('Shift + Ctrl + V have been pressed')
+})
+
 
 defineProps({
   msg: String,
@@ -92,6 +118,23 @@ defineProps({
         </p>
       </div>
 
+      <h3>Infinite Scroll Example</h3>
+      <div ref="scrollContainer" class="w-32 max-h-32 overflow-y-auto border rounded-lg bg-gray-100 p-2 ">
+        <div v-for="item in data">
+          {{ item }}
+        </div>
+      </div>
+
+      <h3>Magic Keys Example</h3>
+      <div v-if="keys.down">Down is pressed</div>
+      <div v-if="keys.up">Up is pressed</div>
+
+      <div class="read-the-docs">
+        <p>
+          For more information, check out the
+          <a href="https://vuejs.org/guide/introduction.html" target="_blank" class="text-blue-800 hover:underline">Vue 3 Documentation</a>.
+        </p>
+      </div>
 
   </div>
 </template>
