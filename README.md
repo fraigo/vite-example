@@ -29,7 +29,9 @@
 
 ## Adding Vue Router
 
-Organize router views in a special folder `src/views`
+Vue Router is the official client-side routing solution for Vue.
+
+First, organize router views in a specific folder `src/views`
 
 * Create `src/views/Home.vue`
 ```html
@@ -44,12 +46,12 @@ Setup Vue-router
 * Run `npm install vue-router`
 * Create `src/router/index.js`
 ```javascript
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 
 const routes = [{ path: '/', component: Home }]
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes,
 })
 export default router
@@ -58,13 +60,26 @@ export default router
 ```javascript
 import router from './router'
 ```
-  * Add `use(router`)` to the Vue app in `src/main.js`
+  * Add `use(router)` to the Vue app in `src/main.js`
 ```javascript
 createApp(App)
   .use(router)
   .mount('#app')
 ```
+  * Setup a `RouterView` in your main App container `src/App.vue` to render the view selected from `routes`.
+```javascript
+<script setup>
+  import { RouterView } from 'vue-router';
+</script>
 
+<template>
+  <div>
+    <RouterView />
+  </div>
+</template>
+```
+
+You can use `createWebHistory` instead of `createWebHashHistory` to use regular URL paths to improve SEO if needed. However, tHis needs additional server configuration to make it work. See https://router.vuejs.org/guide/essentials/history-mode#Example-Server-Configurations for more details.
 
 
 ## Adding Pinia (State management)
@@ -419,6 +434,45 @@ watch(shiftCtrlA, (v) => {
 <div v-if="keys.up">Up is pressed</div>
 ```
 
+## Vite Config improvements
+
+YOu can edit `vite.config.js` to configure some options for compiling and building the project.
+
+### Use `@` in imports, as an alias of the root `src` directory 
+
+For example, use `@/views/Home.vue` instead of `../views/Home.vue`
+
+* Add the import of `fileURLToPath` and `URL`:
+```javascript
+import { fileURLToPath, URL } from 'node:url'
+```
+* Define a resolve alias entry:
+```javascript
+export default defineConfig({
+  // ...
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  },
+})
+```
+* Then you can use `@` instead of a relative path in imports:
+```javascript
+import Home from '@/views/Home.vue'
+```
+
+### Convert base path from absolute to relative
+
+This will allow to build the app to be served in a subfolder. All the content is loaded relative to that folder, instead of a fixed root path (`/`).
+
+* Define the `base` path, use `'./'` or `''`
+```javascript
+export default defineConfig({
+  base: './',
+  // ...
+})
+```
 
 
 ## Other Useful Libraries
