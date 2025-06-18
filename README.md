@@ -436,7 +436,7 @@ watch(shiftCtrlA, (v) => {
 
 ## Vite Config improvements
 
-YOu can edit `vite.config.js` to configure some options for compiling and building the project.
+You can edit `vite.config.js` to configure some options for compiling and building the project.
 
 ### Use `@` in imports, as an alias of the root `src` directory 
 
@@ -476,6 +476,28 @@ export default defineConfig({
 
 
 ## Other Useful Libraries
+
+`vite-plugin-pwa`
+
+Plugin to setup a PWA (Progressive Web Application). A PWA consists of a web application manifest to give the browser information about your app, and a service worker to manage the offline experience. More info on PWAs here: https://web.dev/learn/pwa/
+
+* Install as a dev package: `npm install -D vite-plugin-pwa`
+* Modify `vite.config.js` to add it to the `plugins` section:
+```javascript
+import { VitePWA } from 'vite-plugin-pwa'
+
+export default defineConfig({
+  plugins: [
+    VitePWA({ 
+      registerType: 'autoUpdate',
+    })
+  ],
+})
+
+```
+
+
+
 
 `vue3-lottie`
 
